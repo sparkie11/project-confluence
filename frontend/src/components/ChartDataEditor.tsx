@@ -5,22 +5,27 @@ interface ChartDataEditorProps {
   chartName: string;
   initialData: any[];
   onDataChange: (newData: any[]) => void;
+  userEmail: string | null;
 }
 
-const ChartDataEditor: React.FC<ChartDataEditorProps> = ({ chartName, initialData, onDataChange }) => {
-  const [email, setEmail] = useState<string>('');
+const ChartDataEditor: React.FC<ChartDataEditorProps> = ({ chartName, initialData, onDataChange, userEmail }) => {
   const [isEmailSubmitted, setIsEmailSubmitted] = useState<boolean>(false);
   const [customValues, setCustomValues] = useState<string>(JSON.stringify(initialData, null, 2));
   const [previousValues, setPreviousValues] = useState<string | null>(null);
   const [message, setMessage] = useState<string>('');
 
   useEffect(() => {
-    if (isEmailSubmitted) {
-      loadCustomValues();
+    if (userEmail) {
+      setIsEmailSubmitted(true);
+      loadCustomValues(userEmail);
+    } else {
+      setIsEmailSubmitted(false);
+      setPreviousValues(null);
+      setMessage('');
     }
-  }, [isEmailSubmitted]);
+  }, [userEmail]);
 
-  const loadCustomValues = async () => {
+  const loadCustomValues = async (email: string) => {
     const { data, error } = await supabase
       .from('chart_data')
       .select('values')
@@ -40,18 +45,17 @@ const ChartDataEditor: React.FC<ChartDataEditorProps> = ({ chartName, initialDat
     }
   };
 
-  const handleEmailSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsEmailSubmitted(true);
-  };
-
   const handleSaveValues = async () => {
+    if (!userEmail) {
+      setMessage('Please enter your email first.');
+      return;
+    }
     try {
       const parsedValues = JSON.parse(customValues);
       const { data: existingData, error: existingError } = await supabase
         .from('chart_data')
         .select('id')
-        .eq('email', email)
+        .eq('email', userEmail)
         .eq('chart_name', chartName)
         .single();
 
@@ -64,7 +68,7 @@ const ChartDataEditor: React.FC<ChartDataEditorProps> = ({ chartName, initialDat
         const { error } = await supabase
           .from('chart_data')
           .update({ values: parsedValues })
-          .eq('email', email)
+          .eq('email', userEmail)
           .eq('chart_name', chartName);
         if (error) throw error;
         setMessage('Custom values updated successfully!');
@@ -72,7 +76,7 @@ const ChartDataEditor: React.FC<ChartDataEditorProps> = ({ chartName, initialDat
         // Insert new record
         const { error } = await supabase
           .from('chart_data')
-          .insert([{ email, chart_name: chartName, values: parsedValues }]);
+          .insert([{ email: userEmail, chart_name: chartName, values: parsedValues }]);
         if (error) throw error;
         setMessage('Custom values saved successfully!');
       }
@@ -88,20 +92,10 @@ const ChartDataEditor: React.FC<ChartDataEditorProps> = ({ chartName, initialDat
     handleSaveValues();
   };
 
-  if (!isEmailSubmitted) {
+  if (!userEmail) {
     return (
       <div className="chart-editor">
-        <h3>Enter your email to customize {chartName}</h3>
-        <form onSubmit={handleEmailSubmit}>
-          <input
-            type="email"
-            placeholder="Your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <button type="submit">Submit Email</button>
-        </form>
+        <h3>Please enter your email in the field above to customize {chartName}</h3>
       </div>
     );
   }

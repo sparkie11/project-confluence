@@ -17,10 +17,21 @@ const initialSadPathData = [
 
 function App() {
   const [sadPathData, setSadPathData] = useState(initialSadPathData);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
 
   return (
     <div className="App">
       <h1>Call Analytics Dashboard</h1>
+      <div className="email-input-container">
+        <label htmlFor="userEmail">Enter your email to save/load custom data:</label>
+        <input
+          id="userEmail"
+          type="email"
+          value={userEmail || ''}
+          onChange={(e) => setUserEmail(e.target.value)}
+          placeholder="your.email@example.com"
+        />
+      </div>
       <div className="charts-container">
         <CallDurationChart />
         <SadPathAnalysisChart data={sadPathData} />
@@ -30,6 +41,7 @@ function App() {
           chartName="Sad Path Analysis"
           initialData={initialSadPathData}
           onDataChange={setSadPathData}
+          userEmail={userEmail}
         />
       </div>
     </div>
