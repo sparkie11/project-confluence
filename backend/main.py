@@ -6,13 +6,14 @@ from sqlalchemy import create_engine, Column, String, Float, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from typing import Optional
+import os
 
 app = FastAPI()
 
 # SQLAlchemy Setup
 # SQLALCHEMY_DATABASE_URL = "sqlite:///./transactions.db"
 # SQLALCHEMY_DATABASE_URL =" postgresql://postgres:[YOUR-PASSWORD]@[PROJECT-REF].supabase.co:5432/postgres"
-SQLALCHEMY_DATABASE_URL = "postgresql://postgres:Agd.ACLXBCs48dg@db.ecawgtedjdblfwrzidga.supabase.co:5432/postgres"
+SQLALCHEMY_DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:Agd.ACLXBCs48dg@db.ecawgtedjdblfwrzidga.supabase.co:5432/postgres?sslmode=require")
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL
 )
