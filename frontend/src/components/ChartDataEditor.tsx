@@ -6,9 +6,11 @@ interface ChartDataEditorProps {
   initialData: any[];
   onDataChange: (newData: any[]) => void;
   userEmail: string | null;
+  setUserEmail: string | null;
+
 }
 
-const ChartDataEditor: React.FC<ChartDataEditorProps> = ({ chartName, initialData, onDataChange, userEmail }) => {
+const ChartDataEditor: React.FC<ChartDataEditorProps> = ({ chartName, initialData, onDataChange, userEmail, setUserEmail }) => {
   const [isEmailSubmitted, setIsEmailSubmitted] = useState<boolean>(false);
   const [customValues, setCustomValues] = useState<string>(JSON.stringify(initialData, null, 2));
   const [previousValues, setPreviousValues] = useState<string | null>(null);
@@ -96,12 +98,33 @@ const ChartDataEditor: React.FC<ChartDataEditorProps> = ({ chartName, initialDat
     return (
       <div className="chart-editor">
         <h3>Please enter your email in the field above to customize {chartName}</h3>
+        <div className="email-input-container">
+            <label htmlFor="userEmail">Your Email:</label>
+            <input
+              type="email"
+              id="userEmail"
+              value={userEmail || ''}
+              onChange={(e) => setUserEmail(e.target.value)}
+              placeholder="Enter your email to customize charts"
+            />
+          </div>
       </div>
     );
   }
 
   return (
     <div className="chart-editor">
+                <div className="email-input-container">
+            <label htmlFor="userEmail">Your Email:</label>
+            <input
+              type="email"
+              id="userEmail"
+              value={userEmail || ''}
+              onChange={(e) => setUserEmail(e.target.value)}
+              placeholder="Enter your email to customize charts"
+            />
+          </div>
+
       <h3>Customize {chartName}</h3>
       <textarea
         value={customValues}
@@ -111,13 +134,13 @@ const ChartDataEditor: React.FC<ChartDataEditorProps> = ({ chartName, initialDat
       />
       <button onClick={handleSaveValues}>Save Custom Values</button>
       {message && <p>{message}</p>}
-      {previousValues && previousValues !== customValues && (
+      {/* {previousValues && previousValues !== customValues && (
         <div>
           <p>Previous values:</p>
           <textarea value={previousValues} rows={5} cols={50} readOnly />
           <button onClick={handleOverwriteConfirm}>Confirm Overwrite</button>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

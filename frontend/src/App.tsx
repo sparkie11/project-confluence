@@ -73,11 +73,22 @@ function App() {
       {/* Charts Section */}
       <section className="charts-section">
         <div className="charts-container">
+          {/* <div className="email-input-container">
+            <label htmlFor="userEmail">Your Email:</label>
+            <input
+              type="email"
+              id="userEmail"
+              value={userEmail || ''}
+              onChange={(e) => setUserEmail(e.target.value)}
+              placeholder="Enter your email to customize charts"
+            />
+          </div> */}
         <ChartDataEditor
           chartName="Sad Path Analysis"
           initialData={initialSadPathData}
           onDataChange={setSadPathData}
           userEmail={userEmail}
+          setUserEmail={setUserEmail}
         />
           <CallDurationChart  />
           <SadPathAnalysisChart data={sadPathData} />
