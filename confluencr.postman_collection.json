@@ -1,0 +1,99 @@
+{
+	"info": {
+		"_postman_id": "2a6b2faa-f76d-4bc4-b488-652006b6e9b8",
+		"name": "confluencr",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "47307462"
+	},
+	"item": [
+		{
+			"name": "Transactions",
+			"item": [
+				{
+					"name": "Get Transaction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiY2xpZW50X2lkIjoiMSIsInVzZXJfaWQiOiIxIiwic2NvcGUiOiJjbGllbnQiLCJleHAiOjE3NjEzMTc5MjV9.tw8D30L8TqbL0jZMyt4ikLt2wpKCRUo4nKfq5Kv0yr8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:9010/api/client/1/providers",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "9010",
+							"path": [
+								"api",
+								"client",
+								"1",
+								"providers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Transaction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiY2xpZW50X2lkIjoiMSIsInVzZXJfaWQiOiIxIiwic2NvcGUiOiJjbGllbnQiLCJleHAiOjE3NjEzMTc5MjV9.tw8D30L8TqbL0jZMyt4ikLt2wpKCRUo4nKfq5Kv0yr8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"transaction_id\": \"txn_abc123def456\",\n  \"source_account\": \"acc_user_789\",\n  \"destination_account\": \"acc_merchant_456\",\n  \"amount\": 1500,\n  \"currency\": \"INR\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8000/v1/webhooks/transactions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"v1",
+								"webhooks",
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
