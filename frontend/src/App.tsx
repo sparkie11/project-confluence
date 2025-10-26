@@ -43,7 +43,7 @@ function App() {
     <div className="App">
       {/* Header/Navigation Bar */}
       <header className="header w-[100vw]">
-        <div className="logo">#SuperBryn</div>
+        <div className="logo">#confluencr</div>
         <nav className="navigation">
           <a href="#" className="nav-link">Home</a>
           <a href="#" className="nav-link">Newsletter</a>
@@ -62,12 +62,7 @@ function App() {
           </p>
           <button className="get-started-button">Get Started</button>
         </div>
-        <div className="video-player-container">
-          {/* Placeholder for video player */}
-          <div className="video-placeholder">
-            <div className="play-button">▶</div>
-          </div>
-        </div>
+
       </section>
 
       {/* Charts Section */}
@@ -108,7 +103,7 @@ function App() {
       {/* Footer */}
       <footer className="footer">
         <div className="footer-left">
-          <div className="footer-logo">#SuperBryn</div>
+          <div className="footer-logo">#confluencr</div>
           <p className="footer-tagline">The missing layer for your voice agent which adapts, learns, and never lets your users down.</p>
           <div className="social-links">
             <a href="#" className="social-icon">T</a> {/* Placeholder for Twitter icon */}

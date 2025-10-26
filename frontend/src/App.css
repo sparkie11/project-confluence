@@ -30,7 +30,7 @@ code {
 .header .logo {
   font-size: 24px;
   font-weight: 700; /* Bold */
-  color: #00c896; /* SuperBryn green */
+color: #00c896; /* confluencr green */
 }
 
 .navigation a {
@@ -193,7 +193,7 @@ code {
   font-size: 72px; /* Larger font size */
   font-weight: 800; /* Extra bold */
   margin-bottom: 20px;
-  color: #00c896; /* SuperBryn green */
+  color: #00c896; /* confluencr green */
 }
 
 .hero-tagline {
@@ -274,7 +274,7 @@ code {
   font-size: 36px;
   font-weight: 700; /* Bold */
   margin-bottom: 20px;
-  color: #00c896; /* SuperBryn green */
+  color: #00c896; /* confluencr green */
 }
 
 .footer-tagline {
