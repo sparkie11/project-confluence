@@ -1,13 +1,13 @@
 import './App.css';
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
+import { supabase } from './supabaseClient';
 
 import CallDurationChart from './components/CallDurationChart';
 import SadPathAnalysisChart from './components/SadPathAnalysisChart';
 import ChartDataEditor from './components/ChartDataEditor';
-
 const initialSadPathData = [
-  { name: 'Verbal Aggression', value: 100 },
-  { name: 'Customer Hostility', value: 200 },
+   { name: 'Verbal Aggression', value: 100 },
+     { name: 'Customer Hostility', value: 200 },
   { name: 'Assistant did not speak French', value: 300 },
   { name: 'Unsupported Language', value: 150 },
   { name: 'Assistant did not speak Spanish', value: 250 },
@@ -17,8 +17,28 @@ const initialSadPathData = [
 ];
 
 function App() {
+  const [chartData, setChartData] = useState<any[]>([]);
   const [sadPathData, setSadPathData] = useState(initialSadPathData);
   const [userEmail, setUserEmail] = useState<string | null>(null);
+
+
+
+  // const fetchChartData = useCallback(async () => {
+  //   const { data, error } = await supabase
+  //     .from('chart_data')
+  //     .select('email, call_duration, sad_path');
+
+  //   if (error) {
+  //     console.error('Error fetching chart data:', error.message);
+  //   } else {
+  //     setChartData(data);
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   fetchChartData();
+  // }, [fetchChartData]);
+
   return (
     <div className="App">
       {/* Header/Navigation Bar */}
@@ -34,29 +54,6 @@ function App() {
       {/* New Body Section */}
       <section className="new-body-section grid-background">
         <div className="new-body-content">
-        <div className="email-input-container">
-        <label htmlFor="userEmail">Enter your email to save/load custom data:</label>
-        <input
-          id="userEmail"
-          type="email"
-          value={userEmail || ''}
-          onChange={(e) => setUserEmail(e.target.value)}
-          placeholder="your.email@example.com"
-        />
-        </div>
-
-        <div className="charts-container">
-        <CallDurationChart />
-        <SadPathAnalysisChart data={sadPathData} />
-        </div>
-        <div className="editor-container">
-        <ChartDataEditor
-          chartName="Sad Path Analysis"
-          initialData={initialSadPathData}
-          onDataChange={setSadPathData}
-          userEmail={userEmail}
-        />
-              </div>
           <h1 className="new-body-title">
             Helping Engineering Teams <span className="highlight">Scale</span> Voice AI
           </h1>
@@ -68,9 +65,22 @@ function App() {
         <div className="video-player-container">
           {/* Placeholder for video player */}
           <div className="video-placeholder">
-            <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="Video Thumbnail" className="video-thumbnail" />
             <div className="play-button">▶</div>
           </div>
+        </div>
+      </section>
+
+      {/* Charts Section */}
+      <section className="charts-section">
+        <div className="charts-container">
+        <ChartDataEditor
+          chartName="Sad Path Analysis"
+          initialData={initialSadPathData}
+          onDataChange={setSadPathData}
+          userEmail={userEmail}
+        />
+          <CallDurationChart  />
+          <SadPathAnalysisChart data={sadPathData} />
         </div>
       </section>
 
